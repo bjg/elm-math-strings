@@ -1,0 +1,16 @@
+{
+    "type": "package",
+    "name": "amazzeo/elm-math-strings",
+    "summary": "A library to evaluate math expressions as Strings.",
+    "license": "MIT",
+    "version": "1.0.1",
+    "exposed-modules": [
+        "Math.Strings"
+    ],
+    "elm-version": "0.19.0 <= v < 0.20.0",
+    "dependencies": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "mhoare/elm-stack": "3.1.2 <= v < 4.0.0"
+    },
+    "test-dependencies": {}
+}

@@ -1,4 +1,4 @@
-module Math.Strings.EvaluationState exposing (..)
+module Math.Strings.EvaluationState exposing (EvaluationState, addOperator, incrementNumProcessed, initialState, popOperator, saveRunningVal)
 
 {-| A type to track the state of an expression evaluation.
 -}
@@ -57,7 +57,7 @@ addOperator op state =
                 _ ->
                     state.nestedLevel
     in
-        { state | operators = Stack.push op state.operators, nestedLevel = newNestedLevel }
+    { state | operators = Stack.push op state.operators, nestedLevel = newNestedLevel }
 
 
 popOperator : EvaluationState -> EvaluationState
@@ -74,4 +74,4 @@ popOperator state =
                 _ ->
                     state.nestedLevel
     in
-        { state | operators = newOperators, nestedLevel = newNestedLevel }
+    { state | operators = newOperators, nestedLevel = newNestedLevel }

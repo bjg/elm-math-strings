@@ -1,4 +1,4 @@
-module Math.Strings.Operators exposing (..)
+module Math.Strings.Operators exposing (Operator(..), applyOperator, fromChar, hasPrecedence)
 
 {-| A type to represent valid Operators.
 -}
@@ -17,6 +17,7 @@ type Operator
 {-| Applies the given Operator to the two inputs. If the Operator cannot be applied, returns a String describing the error.
 
     applyOperator Addition 2 2 == Ok 4
+
     applyOperator Subtraction 2 4 == Ok 2
 
 -}
@@ -46,9 +47,9 @@ applyOperator op b a =
         _ ->
             let
                 errString =
-                    (toString op) ++ " cannot be applied."
+                    Debug.toString op ++ " cannot be applied."
             in
-                Err errString
+            Err errString
 
 
 {-| Returns True if op1 has equal or higher precedence than op2
@@ -60,10 +61,13 @@ hasPrecedence : Operator -> Operator -> Bool
 hasPrecedence op1 op2 =
     if (op2 == OpenParen) || (op2 == CloseParen) then
         True
+
     else if op1 == Exponent && (op2 == Exponent || op2 == Multiplication || op2 == Division || op2 == Addition || op2 == Subtraction) then
         True
+
     else if (op1 == Multiplication || op1 == Division) && (op2 == Addition || op2 == Subtraction) then
         True
+
     else
         False
 
@@ -100,6 +104,6 @@ fromChar ch =
         _ ->
             let
                 errString =
-                    "'" ++ (String.fromChar ch) ++ "' is not a supported Operator."
+                    "'" ++ String.fromChar ch ++ "' is not a supported Operator."
             in
-                Err errString
+            Err errString

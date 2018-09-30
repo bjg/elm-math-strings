@@ -1,7 +1,7 @@
-module Math.Strings.Tokens exposing (..)
+module Math.Strings.Tokens exposing (Token(..), parseToken)
 
-import Math.Strings.Operators as Operators exposing (Operator)
 import Char
+import Math.Strings.Operators as Operators exposing (Operator)
 
 
 {-| Union type to represent possible valid characters.
@@ -21,7 +21,9 @@ parseToken : Char -> Result String Token
 parseToken ch =
     if ch == ' ' then
         Ok Whitespace
+
     else if Char.isDigit ch then
         Ok (Digit ch)
+
     else
         Result.map Op (Operators.fromChar ch)

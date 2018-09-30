@@ -1,9 +1,9 @@
-module Math.Strings.TokensTests exposing (..)
+module Math.Strings.TokensTests exposing (operatorFuzzer, suite)
 
 import Expect exposing (Expectation)
-import Fuzz exposing (Fuzzer, int, list, string, tuple, char)
-import Test exposing (..)
+import Fuzz exposing (Fuzzer, char, int, list, string, tuple)
 import Math.Strings.Tokens as Tokens exposing (Token(..))
+import Test exposing (..)
 
 
 operatorFuzzer =
@@ -24,24 +24,25 @@ suite =
                 \i ->
                     let
                         iAsChar =
-                            toString i
+                            String.fromInt i
                                 |> String.uncons
                                 |> Maybe.map (\( h, t ) -> h)
                                 |> Maybe.withDefault '0'
                     in
-                        Tokens.parseToken iAsChar
-                            |> Expect.equal (Ok (Digit iAsChar))
+                    Tokens.parseToken iAsChar
+                        |> Expect.equal (Ok (Digit iAsChar))
             , fuzz operatorFuzzer "interprets operators as Operators" <|
                 \c ->
                     Tokens.parseToken c
-                        |> \token ->
-                            case token of
-                                Ok (Op _) ->
-                                    Expect.pass
+                        |> (\token ->
+                                case token of
+                                    Ok (Op _) ->
+                                        Expect.pass
 
-                                _ ->
-                                    (String.fromChar c)
-                                        ++ " is not an operator"
-                                        |> Expect.fail
+                                    _ ->
+                                        String.fromChar c
+                                            ++ " is not an operator"
+                                            |> Expect.fail
+                           )
             ]
         ]

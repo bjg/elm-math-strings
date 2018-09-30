@@ -1,9 +1,9 @@
-module Math.Strings.OperatorsTests exposing (..)
+module Math.Strings.OperatorsTests exposing (notOpFuzzer, suite)
 
 import Expect exposing (Expectation)
-import Fuzz exposing (Fuzzer, int, list, string, tuple, char)
-import Test exposing (..)
+import Fuzz exposing (Fuzzer, char, int, list, string, tuple)
 import Math.Strings.Operators as Operators exposing (Operator(..))
+import Test exposing (..)
 
 
 notOpFuzzer : Fuzzer Char
@@ -25,7 +25,7 @@ suite =
                         actual =
                             Operators.applyOperator Addition b a
                     in
-                        Expect.equal expected actual
+                    Expect.equal expected actual
             , fuzz (tuple ( int, int )) "applies subtraction" <|
                 \( a, b ) ->
                     let
@@ -36,7 +36,7 @@ suite =
                         actual =
                             Operators.applyOperator Subtraction b a
                     in
-                        Expect.equal expected actual
+                    Expect.equal expected actual
             , fuzz (tuple ( int, int )) "applies multiplication" <|
                 \( a, b ) ->
                     let
@@ -47,16 +47,17 @@ suite =
                         actual =
                             Operators.applyOperator Multiplication b a
                     in
-                        Expect.equal expected actual
+                    Expect.equal expected actual
             , fuzz (tuple ( int, int )) "applies division" <|
                 \( a, b ) ->
                     Operators.applyOperator Division b a
-                        |> case b of
-                            0 ->
-                                Expect.err
+                        |> (case b of
+                                0 ->
+                                    Expect.err
 
-                            _ ->
-                                Expect.equal (Ok (a // b))
+                                _ ->
+                                    Expect.equal (Ok (a // b))
+                           )
             , fuzz (tuple ( int, int )) "applies exponents" <|
                 \( a, b ) ->
                     Operators.applyOperator Exponent b a

@@ -1,10 +1,10 @@
-module Math.StringsTests exposing (..)
+module Math.StringsTests exposing (suite)
 
-import Expect exposing (Expectation)
-import Fuzz exposing (Fuzzer, int, list, string, tuple, char)
-import Test exposing (..)
-import Math.Strings
 import Debug
+import Expect exposing (Expectation)
+import Fuzz exposing (Fuzzer, char, int, list, string, tuple)
+import Math.Strings
+import Test exposing (..)
 
 
 suite : Test
